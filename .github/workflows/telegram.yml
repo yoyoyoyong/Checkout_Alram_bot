@@ -1,9 +1,9 @@
-name: Telegram 16시20분 알림
+name: Telegram 17시47분 알림
 
 on:
   schedule:
-    # UTC 기준: KST(UTC+9) → 16:20 = UTC 07:20
-    - cron: "20 7 * * *"
+    # UTC 기준: KST(UTC+9) → 17:47 = UTC 08:47
+    - cron: "47 8 * * *"
   workflow_dispatch: {}
 
 jobs:
