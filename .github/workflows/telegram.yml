@@ -1,0 +1,27 @@
+name: Telegram Scheduled Message
+
+on:
+  schedule:
+    # ↓ UTC 기준입니다. (KST는 +9시간) 예: KST 10:00 = UTC 01:00
+    - cron: "0 1 * * *"
+  # 수동 테스트 버튼도 생성
+  workflow_dispatch: {}
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compose message (KST time-stamp)
+        id: msg
+        run: |
+          # GitHub Actions는 UTC라서 +9시간 더한 한국시간 표기
+          KST_NOW=$(date -u -d '9 hours' +'%Y-%m-%d %H:%M KST (%a)')
+          echo "MSG=📣 정기 공지입니다. (${KST_NOW})" >> $GITHUB_OUTPUT
+
+      - name: Send to Telegram
+        run: |
+          curl -sS -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d '{"chat_id":"'"${{ secrets.CHAT_ID }}"'",
+                 "text":"'"${{ steps.msg.outputs.MSG }}"'",
+                 "parse_mode":"HTML"}'
