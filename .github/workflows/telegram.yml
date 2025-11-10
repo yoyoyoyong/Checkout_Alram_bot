@@ -13,8 +13,7 @@ jobs:
       - name: Compose message (퇴실체크 안내)
         id: msg
         run: |
-          KST_NOW=$(date -u -d '9 hours' +'%Y-%m-%d (%a) KST')
-          echo "MSG=퇴실체크 안내 부탁드립니다:) (${KST_NOW})" >> $GITHUB_OUTPUT
+          echo "MSG=퇴실전 수강생들 퇴실체크 안내 부탁드립니다 :)" >> $GITHUB_OUTPUT
 
       - name: Send Telegram Message
         run: |
